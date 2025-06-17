@@ -1,0 +1,10 @@
+{
+  "profiles": {
+    "LitCodeOloloNadOther": {
+      "commandName": "Project"
+    },
+    "Container (Dockerfile)": {
+      "commandName": "Docker"
+    }
+  }
+}
