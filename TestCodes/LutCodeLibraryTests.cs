@@ -40,21 +40,29 @@ namespace TestCodes
         [InlineData(new int[2] { 1, 3 }, new int[1] { 2 }, 2)]
         [InlineData(new int[2] { 1, 2 }, new int[2] { 3, 4 }, 2.5)]
         [InlineData(new int[2] { -1, 3 }, new int[1] { 2 }, 2)]
-        [InlineData(new int[2] { -1, 2 }, new int[2] { 3, 4 }, 2.5)]
+        [InlineData(new int[2] { 0, 0 }, new int[2] { 0, 0 }, 0)]
+        [InlineData(new int[1] { 2 }, new int[0] { }, 2)]
 
         public void Check_FindMedianSortedArrays(int[] num1, int[] num2, double expected)
         {
-
-
             // Act
             var result = TestedClass.FindMedianSortedArrays(num1, num2);
 
             // Assert
             Assert.Equal(expected, result);
+        }
 
 
+        [Theory]
+        [InlineData(new int[4] { 2, 7, 11, 15 }, 9, new int[2] { 0,1})]
+        [InlineData(new int[3] { 3, 2, 4 }, 6, new int[2] { 1,2 })]
+        [InlineData(new int[2] { 3, 3 }, 6, new int[2] { 0,1 })]
+        public void Check_TwoSum(int[] nums, int target, int[] expected)
+        {
 
+            var result = TestedClass.TwoSum(nums,  target);
 
+            Assert.Equal(expected, result);
         }
 
 
@@ -64,7 +72,8 @@ namespace TestCodes
 
 
 
-  
+
+
 
         public void FindMedianSortedArraysTest(int a, int b, int expected)
         {

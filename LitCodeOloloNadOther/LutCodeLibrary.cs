@@ -14,8 +14,9 @@ namespace LitCodeOloloNadOther
             int half = 0;
             bool isEvenNum = false;
             bool ImHere = false;
-            int[] nums = new int[lng];
+           // int[] nums = new int[lng];
             int i = 0, j = 0, k = 0;
+            int CurrentStep = 0;
             double result = 0;
 
             if (lng%2 == 0 ) // 
@@ -25,50 +26,58 @@ namespace LitCodeOloloNadOther
             half = (int)lng/2;
             if (!isEvenNum) half++;
 
-            while (k<nums.Length)
+            
+            while (k<lng)
             {
-                if (i == nums1.Length)
+                if (i == nums1.Length || nums1.Length == 0 || nums1 == null)
                 {
-                    nums[k] = nums2[j];
+                    //nums[k] = nums2[j];
+                    CurrentStep = nums2[j];
                     j++;
                     k++;
 
                 }
-                else if (j == nums.Length)
+                else if (j == nums2.Length || nums2.Length == 0 || nums2 == null)
                 {
-                    nums[k] = nums1[i];
+                    //nums[k] = nums1[i];
+                    CurrentStep = nums1[i];
                     i++;
                     k++;
 
 
                 }
-
-                else if (nums1[i] < nums2[j]&& j< nums2.Length && i< nums1.Length)
+                else if (nums1.Length > 0 && nums2.Length > 0 && j < nums2.Length && i < nums1.Length)
                 {
-                    nums[k] = nums1[i];
-                    i++;
-                    k++;
-                }
-                else 
-                {
-                    nums[k] = nums2[j];
-                    j++;
-                    k++;
-                }
 
+                    if (nums1[i] <= nums2[j])
+                    {
+                        //nums[k] = nums1[i];
+                        CurrentStep = nums1[i];
+                        i++;
+                        k++;
+                    }
+                    else
+                    {
+                        //nums[k] = nums2[j];
+                        CurrentStep = nums2[j];
+                        j++;
+                        k++;
+                    }
+                }
 
                 if(k >= half)
                 {
                     //there mediana of two arrays
                     if (!ImHere)
                     {
-                        result = (double)nums[k-1];
+                        //result = (double)nums[k-1];
+                        result = CurrentStep;
                         if (!isEvenNum) return result;
                         else ImHere = true;
                     }
                     else
                     {
-                        result = (double)((result +nums[k-1])/2);
+                        result = (double)((result + CurrentStep) /2);
                         return result;
                     }
 
@@ -83,6 +92,36 @@ namespace LitCodeOloloNadOther
         }
 
 
+        [Obsolete]
+        public int[] TwoSum1(int[] nums, int target)
+        {
+            
+            for (int i = 0; i< nums.Length-1; i++)
+            {
+                for(int j = i+1; j<nums.Length;j++)
+                {
+                    if (nums[i] + nums[j] == target) return new int[]{i,j};
+                }
+            }
+            return new int[2] { -1,-1};
+        }
+
+
+        public int[] TwoSum(int[] nums, int target)
+        {
+            HashSet<int> numset = new HashSet<int>(nums);
+            for (int i = 0; i < nums.Length - 1; i++)
+            {
+                if (numset.Contains(target - nums[i]))
+                {
+                    for (int j = i + 1;j<nums.Length;j++)
+                    {
+                        if (nums[i] + nums[j] == target) return new int[] { i, j };
+                    }
+                }
+            }
+            return new int[2] { -1, -1 };
+        }
 
 
     }
