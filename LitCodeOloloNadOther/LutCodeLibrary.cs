@@ -1,4 +1,5 @@
-﻿using System;
+﻿using LitCodeOloloNadOther.SupportModels;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -122,6 +123,50 @@ namespace LitCodeOloloNadOther
             }
             return new int[2] { -1, -1 };
         }
+
+
+
+        public class Solution
+        {
+            public ListNode MergeKLists(ListNode[] lists)
+            {
+                ListNode result = new ListNode();
+                ListNode[] offets = new ListNode[lists.Length];
+                int summLngth = 0;
+                //for(int n = 0; n < lists.Length; n++)
+                //{
+                //    offets[n] = 0;
+                
+                //}
+                ListNode[] LN = new ListNode[lists.Length];
+                while (true)
+                {
+                    foreach (ListNode l in lists)
+                    {
+                        //get elems by offsets
+
+                    }
+                }
+
+
+
+                    return new ListNode();
+            
+            }
+        }
+
+
+        public static void DoChains(ListNode Current, ListNode result, int currValue)
+        {
+            if(Current.val==currValue)
+            {
+               // result.
+
+            }
+
+
+        }
+
 
 
     }

@@ -1,4 +1,5 @@
-﻿using System;
+﻿using LitCodeOloloNadOther.SupportModels;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -42,7 +43,6 @@ namespace TestCodes
         [InlineData(new int[2] { -1, 3 }, new int[1] { 2 }, 2)]
         [InlineData(new int[2] { 0, 0 }, new int[2] { 0, 0 }, 0)]
         [InlineData(new int[1] { 2 }, new int[0] { }, 2)]
-
         public void Check_FindMedianSortedArrays(int[] num1, int[] num2, double expected)
         {
             // Act
@@ -64,7 +64,6 @@ namespace TestCodes
 
             Assert.Equal(expected, result);
         }
-
 
 
 
