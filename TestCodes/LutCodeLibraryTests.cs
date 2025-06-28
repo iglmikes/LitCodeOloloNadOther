@@ -66,10 +66,21 @@ namespace TestCodes
         }
 
 
+        //Input: lists = [[1, 4, 5],[1, 3, 4],[2, 6]]  Output: [1,1,2,3,4,4,5,6]
+        [Theory]
+        [InlineData(1,  new int[8] { 1, 1, 2, 3, 4, 4, 5, 6 }) ]
+        public void Check_MergeKLists(int hz1, int[] expected)
+        {
+
+           var hz =  new int[][] { new int[3] { 1, 4, 5 }, new int[3] { 1, 3, 4 }, new int[2] { 2, 6 } };
+            ListNode[] Checked = new ListNode[3] { new ListNode(hz[0]), new ListNode(hz[1]), new ListNode(hz[2]) };
+
+            var result = TestedClass.MergeKLists(Checked);
+
+            Assert.Equal(new ListNode(expected), result);
 
 
-
-
+        }
 
 
 

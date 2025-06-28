@@ -1,13 +1,14 @@
 ﻿using LitCodeOloloNadOther.SupportModels;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
 namespace LitCodeOloloNadOther
 {
-    public  class LutCodeLibrary
+    public class LutCodeLibrary
     {
         public double FindMedianSortedArrays(int[] nums1, int[] nums2)
         {
@@ -15,20 +16,20 @@ namespace LitCodeOloloNadOther
             int half = 0;
             bool isEvenNum = false;
             bool ImHere = false;
-           // int[] nums = new int[lng];
+            // int[] nums = new int[lng];
             int i = 0, j = 0, k = 0;
             int CurrentStep = 0;
             double result = 0;
 
-            if (lng%2 == 0 ) // 
+            if (lng % 2 == 0) // 
             {
                 isEvenNum = true;
             }
-            half = (int)lng/2;
+            half = (int)lng / 2;
             if (!isEvenNum) half++;
 
-            
-            while (k<lng)
+
+            while (k < lng)
             {
                 if (i == nums1.Length || nums1.Length == 0 || nums1 == null)
                 {
@@ -66,7 +67,7 @@ namespace LitCodeOloloNadOther
                     }
                 }
 
-                if(k >= half)
+                if (k >= half)
                 {
                     //there mediana of two arrays
                     if (!ImHere)
@@ -78,7 +79,7 @@ namespace LitCodeOloloNadOther
                     }
                     else
                     {
-                        result = (double)((result + CurrentStep) /2);
+                        result = (double)((result + CurrentStep) / 2);
                         return result;
                     }
 
@@ -96,15 +97,15 @@ namespace LitCodeOloloNadOther
         [Obsolete]
         public int[] TwoSum1(int[] nums, int target)
         {
-            
-            for (int i = 0; i< nums.Length-1; i++)
+
+            for (int i = 0; i < nums.Length - 1; i++)
             {
-                for(int j = i+1; j<nums.Length;j++)
+                for (int j = i + 1; j < nums.Length; j++)
                 {
-                    if (nums[i] + nums[j] == target) return new int[]{i,j};
+                    if (nums[i] + nums[j] == target) return new int[] { i, j };
                 }
             }
-            return new int[2] { -1,-1};
+            return new int[2] { -1, -1 };
         }
 
 
@@ -115,7 +116,7 @@ namespace LitCodeOloloNadOther
             {
                 if (numset.Contains(target - nums[i]))
                 {
-                    for (int j = i + 1;j<nums.Length;j++)
+                    for (int j = i + 1; j < nums.Length; j++)
                     {
                         if (nums[i] + nums[j] == target) return new int[] { i, j };
                     }
@@ -126,48 +127,91 @@ namespace LitCodeOloloNadOther
 
 
 
-        public class Solution
+
+        public ListNode MergeKLists(ListNode[] lists)
         {
-            public ListNode MergeKLists(ListNode[] lists)
-            {
-                ListNode result = new ListNode();
-                ListNode[] offets = new ListNode[lists.Length];
-                int summLngth = 0;
-                //for(int n = 0; n < lists.Length; n++)
-                //{
-                //    offets[n] = 0;
-                
-                //}
-                ListNode[] LN = new ListNode[lists.Length];
-                while (true)
-                {
-                    foreach (ListNode l in lists)
-                    {
-                        //get elems by offsets
+            ListNode result = new ListNode();
+            Dictionary<int, List<ListNode?>> offsets = new Dictionary<int, List<ListNode?>>();
+            bool started = false, ended = false;
+            int starter = 999999999;
+            List<int> Nums = new List<int>();
 
-                    }
-                }
-
-
-
-                    return new ListNode();
+            ListNode First = new ListNode(0, result);
             
+
+            foreach (var v in lists)
+            {
+                if (v.val < starter) starter = v.val;
+                //  if (!offsets.ContainsKey(v.val)) offsets.Add(v.val, new List<ListNode>() { v });
+
+                if (offsets.TryGetValue(v.val, out var Lst))
+                { Lst.Add(v); }
+                else
+                { offsets.Add(v.val, new List<ListNode?>() { v }); }
+                //else (offsets[v.val].Add(v));
             }
+            bool isended;
+            for (int i = starter; ; i++)
+            {
+                isended = false;
+                if (offsets.ContainsKey(i))
+                {
+                    foreach (var v in offsets[i])
+                    {
+                        var CurrentRty = DoChains(v, ref result.next, i, offsets);
+                        isended |= CurrentRty.res;
+                        result = CurrentRty.Last;
+                    }
+                    offsets.Remove(i);
+                    if (isended)
+                        return First.next;
+                    //
+                }
+            }
+            //add starter steps and add 
+            return new ListNode();
         }
 
 
-        public static void DoChains(ListNode Current, ListNode result, int currValue)
+
+
+        public static void AddToDict(Dictionary<int, List<ListNode?>> offsets, ListNode v)
         {
-            if(Current.val==currValue)
+            if (offsets.TryGetValue(v.val, out var Lst))
+            { Lst.Add(v); }
+            else
+            { offsets.Add(v.val, new List<ListNode?>() { v }); }
+
+        }
+
+        public static (bool res, ListNode Last) DoChains(ListNode Current, ref ListNode ResultNode, int CurrValue, Dictionary<int, List<ListNode?>> Offsets)
+        {
+            if (Current.val == CurrValue)
             {
-               // result.
 
+                ResultNode = new ListNode(CurrValue);
+                if (Current.next == null)
+                    return (true, ResultNode);
+                if (Current.next.val > CurrValue)
+                {
+                    AddToDict(Offsets, Current.next);
+                    return (false, Current);
+                }
+                else
+                {
+                    var hz = DoChains(Current.next,ref  ResultNode.next, CurrValue, Offsets);
+                    return (hz.res, hz.Last);
+                }
             }
-
-
+            else
+            {
+                AddToDict(Offsets, Current);//not need it?
+                return (false, ResultNode);
+            }
         }
 
 
 
     }
 }
+
