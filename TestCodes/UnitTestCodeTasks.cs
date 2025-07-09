@@ -6,7 +6,7 @@ namespace TestCodes
 
     public class UnitTestCodeTasks
     {
-
+        public LitCodeOloloNadOther.MegaExample TextedExample = new LitCodeOloloNadOther.MegaExample(); 
 
 
 
